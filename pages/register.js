@@ -1,4 +1,16 @@
+import { useState } from 'react';
+import FormInput from '../components/FormInput';
+
+import ResetPasswordQuestion from '../utils/reset';
 const Register = () => {
+	const [ name, setName ] = useState('');
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ secret, setSecret ] = useState('');
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		console.log(name, email, password, secret);
+	};
 	return (
 		<div className="container-fluid">
 			<div className="row py-5 bg-secondary text-light">
@@ -8,43 +20,36 @@ const Register = () => {
 			</div>
 			<div className="row py-5">
 				<div className="col-md-6 offset-md-3">
-					<form>
-						<div className="form-group p-2">
-							<small>
-								{' '}
-								<label className="text-muted"> Your name</label>
-							</small>
-							<input type="text" className="form-control" placeholder="enter name" />
-						</div>
-						<div className="form-group p-2">
-							<small>
-								{' '}
-								<label className="text-muted"> Email address</label>
-							</small>
-							<input type="email" className="form-control" placeholder="enter email" />
-						</div>
-						<div className="form-group p-2">
-							<small>
-								<label className="text-muted"> Your password</label>
-							</small>
-							<input type="password" className="form-control" placeholder="enter password" />
-						</div>
+					<form onSubmit={handleSubmit}>
+						<FormInput
+							label="name"
+							type="text"
+							value={name}
+							placeholder="name"
+							handleChange={(e) => setName(e.target.value)}
+						/>
+						<FormInput
+							label="email"
+							type="email"
+							placeholder="email"
+							value={email}
+							handleChange={(e) => setEmail(e.target.value)}
+						/>
+						<FormInput
+							label="password"
+							type="password"
+							placeholder="password"
+							value={password}
+							handleChange={(e) => setPassword(e.target.value)}
+						/>
+						<ResetPasswordQuestion />
 
-						<div className="form-group p-2">
-							<small>
-								<label className="text-muted"> Pick a question</label>
-							</small>
-							<select className="form-control">
-								<option>What is favorite color</option>
-								<option>What is best friend's name</option>
-								<option>What is city you were born</option>
-							</select>
-
-							<small className="form-text text-muted"> you can use this to reset your password</small>
-						</div>
-						<div className="form-group p-2">
-							<input type="text" className="form-control" placeholder="write your answer here" />
-						</div>
+						<FormInput
+							type="text"
+							placeholder="enter your answer"
+							value={secret}
+							handleChange={(e) => setSecret(e.target.value)}
+						/>
 						<div className="form-group p-2">
 							<button className="btn btn-primary col-12">submit</button>
 						</div>
