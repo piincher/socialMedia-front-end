@@ -12,15 +12,20 @@ const Register = () => {
 	const [ password, setPassword ] = useState('');
 	const [ secret, setSecret ] = useState('');
 	const [ ok, setOk ] = useState(false);
+	const [ loading, setLoading ] = useState(false);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const { data } = await axios.post('http://localhost:8000/api/register', {
+			setLoading(true);
+			const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API}/register`, {
 				name,
 				email,
 				password,
 				secret
 			});
+
+			setName(''), setEmail(''), setPassword(''), setSecret('');
+			setLoading(false);
 			setOk(data.ok);
 		} catch (error) {
 			toast.error(error.response.data);
@@ -66,7 +71,12 @@ const Register = () => {
 							handleChange={(e) => setSecret(e.target.value)}
 						/>
 						<div className="form-group p-2">
-							<button className="btn btn-primary col-12">submit</button>
+							<button
+								className="btn btn-primary col-12"
+								disabled={!name || !email || !password || !secret}
+							>
+								submit
+							</button>
 						</div>
 					</form>
 				</div>
