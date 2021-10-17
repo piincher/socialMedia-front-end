@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { SyncOutlined } from '@ant-design/icons';
-import { Modal } from 'antd';
+import CustomModal from '../components/Modal';
 
 import FormInput from '../components/FormInput';
 
@@ -82,12 +82,23 @@ const Register = () => {
 					</form>
 				</div>
 			</div>
-			<Modal title="congratulation" visible={ok} onCancel={() => setOk(false)} footer={null}>
+			<CustomModal title="congratulation" visible={ok} onCancel={() => setOk(false)} footer={null}>
 				<p>you have successfull register</p>
 				<Link href="/login">
 					<a className="btn btn-primary btn-sm">Login</a>
 				</Link>
-			</Modal>
+			</CustomModal>
+
+			<div className="row">
+				<div className="col">
+					<p className="text-center">
+						Already register ?
+						<Link href="/login">
+							<a>Login</a>
+						</Link>
+					</p>
+				</div>
+			</div>
 		</div>
 	);
 };

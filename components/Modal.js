@@ -1,5 +1,5 @@
 import { Modal } from 'antd';
-const Modal = ({ children, ...otherProps }) => {
+const CustomModal = ({ children, ...otherProps }) => {
 	return (
 		<div className="row">
 			<div className="col">
@@ -8,4 +8,4 @@ const Modal = ({ children, ...otherProps }) => {
 		</div>
 	);
 };
-export default Modal;
+export default CustomModal;

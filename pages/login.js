@@ -1,9 +1,77 @@
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { SyncOutlined } from '@ant-design/icons';
+
+import FormInput from '../components/FormInput';
+
+import CustomButton from '../components/CustomButton';
 const Login = () => {
+	const [ email, setEmail ] = useState('');
+	const [ password, setPassword ] = useState('');
+	const [ loading, setLoading ] = useState(false);
+
+	const router = useRouter();
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			setLoading(true);
+			const { data } = await axios.post(`${process.env.NEXT_PUBLIC_API}/login`, {
+				email,
+				password
+			});
+
+			router.push('/');
+			setLoading(false);
+		} catch (error) {
+			toast.error(error.response.data);
+			setLoading(false);
+		}
+	};
 	return (
-		<div className="container">
+		<div className="container-fluid">
+			<div className="row py-5 text-light bg-default-image">
+				<div className="col text-center">
+					<h1>Login</h1>
+				</div>
+			</div>
+
+			<div className="row py-5">
+				<div className="col-md-6 offset-md-3">
+					<form onSubmit={handleSubmit}>
+						<FormInput
+							label="email"
+							type="email"
+							placeholder="email"
+							value={email}
+							handleChange={(e) => setEmail(e.target.value)}
+						/>
+						<FormInput
+							label="password"
+							type="password"
+							placeholder="password"
+							value={password}
+							handleChange={(e) => setPassword(e.target.value)}
+						/>
+
+						<CustomButton disabled={!email || !password}>
+							{loading ? <SyncOutlined spin className="py-1" /> : 'Submit'}
+						</CustomButton>
+					</form>
+				</div>
+			</div>
+
 			<div className="row">
 				<div className="col">
-					<h1>Login Page </h1>
+					<p className="text-center">
+						you don't have an account ?
+						<Link href="/register">
+							<a>Register</a>
+						</Link>
+					</p>
 				</div>
 			</div>
 		</div>
