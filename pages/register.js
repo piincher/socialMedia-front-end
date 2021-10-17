@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 import FormInput from '../components/FormInput';
 
 import ResetPasswordQuestion from '../utils/reset';
@@ -7,9 +9,20 @@ const Register = () => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ secret, setSecret ] = useState('');
-	const handleSubmit = (e) => {
+	const [ ok, setOk ] = useState(false);
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(name, email, password, secret);
+		try {
+			const { data } = await axios.post('http://localhost:8000/api/register', {
+				name,
+				email,
+				password,
+				secret
+			});
+			setOk(data.ok);
+		} catch (error) {
+			toast.error(error.response.data);
+		}
 	};
 	return (
 		<div className="container-fluid">
