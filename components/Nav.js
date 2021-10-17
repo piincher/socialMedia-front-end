@@ -1,7 +1,7 @@
 import Link from 'next/link';
 const Nav = () => {
 	return (
-		<nav className="nav  d-flex justify-content-between" style={{ backgroundColor: 'blue' }}>
+		<nav className="nav  d-flex justify-content-between" style={{ backgroundColor: '#7fffd4' }}>
 			<Link href="/">
 				<a className="nav-link text-light">Home</a>
 			</Link>
