@@ -31,7 +31,7 @@ const Login = () => {
 				token: data.token
 			});
 			window.localStorage.setItem('auth', JSON.stringify(data));
-			//router.push("/")
+			router.push('/');
 			setLoading(false);
 		} catch (error) {
 			toast.error(error.response.data);
