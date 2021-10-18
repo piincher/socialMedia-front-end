@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -9,11 +9,13 @@ import { SyncOutlined } from '@ant-design/icons';
 import FormInput from '../components/FormInput';
 
 import CustomButton from '../components/CustomButton';
+import { UserContext } from '../context';
 const Login = () => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ loading, setLoading ] = useState(false);
 
+	const [ state, setState ] = useContext(UserContext);
 	const router = useRouter();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -23,8 +25,13 @@ const Login = () => {
 				email,
 				password
 			});
-
-			console.log(data);
+			//update context
+			setState({
+				user: data.user,
+				token: data.token
+			});
+			window.localStorage.setItem('auth', JSON.stringify(data));
+			//router.push("/")
 			setLoading(false);
 		} catch (error) {
 			toast.error(error.response.data);
