@@ -24,7 +24,7 @@ const Login = () => {
 				password
 			});
 
-			router.push('/');
+			console.log(data);
 			setLoading(false);
 		} catch (error) {
 			toast.error(error.response.data);
