@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -10,6 +11,7 @@ import FormInput from '../components/FormInput';
 
 import ResetPasswordQuestion from '../utils/reset';
 import CustomButton from '../components/CustomButton';
+import { UserContext } from '../context';
 const Register = () => {
 	const [ name, setName ] = useState('');
 	const [ email, setEmail ] = useState('');
@@ -17,6 +19,9 @@ const Register = () => {
 	const [ secret, setSecret ] = useState('');
 	const [ ok, setOk ] = useState(false);
 	const [ loading, setLoading ] = useState(false);
+	const router = useRouter();
+
+	const [ state ] = useContext(UserContext);
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -36,6 +41,7 @@ const Register = () => {
 			setLoading(false);
 		}
 	};
+	if (state && state.token) router.push('/');
 	return (
 		<div className="container-fluid">
 			<div className="row py-5 text-light bg-default-image">
