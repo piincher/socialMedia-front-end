@@ -47,7 +47,6 @@ const Login = () => {
 					<h1>Login</h1>
 				</div>
 			</div>
-
 			<div className="row py-5">
 				<div className="col-md-6 offset-md-3">
 					<form onSubmit={handleSubmit}>
@@ -72,7 +71,6 @@ const Login = () => {
 					</form>
 				</div>
 			</div>
-
 			<div className="row">
 				<div className="col">
 					<p className="text-center">
@@ -83,6 +81,16 @@ const Login = () => {
 					</p>
 				</div>
 			</div>
+			<div className="row">
+				<div className="col">
+					<p className="text-center">
+						?
+						<Link href="/forgot-password">
+							<a className="text-danger">Forgot password</a>
+						</Link>
+					</p>
+				</div>
+			</div>>
 		</div>
 	);
 };
