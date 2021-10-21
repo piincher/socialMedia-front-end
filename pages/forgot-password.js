@@ -25,16 +25,16 @@ const ForgotPassword = () => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			const { data } = await axios.post(`/register`, {
-				name,
+			const { data } = await axios.post(`/forgot-password`, {
 				email,
 				password,
 				secret
 			});
 
-			setName(''), setEmail(''), setPassword(''), setSecret('');
-			setLoading(false);
-			setOk(data.ok);
+			// setName(''), setEmail(''), setPassword(''), setSecret('');
+			// setLoading(false);
+			// setOk(data.ok);
+			console.log('forgot data', data);
 		} catch (error) {
 			toast.error(error.response.data);
 			setLoading(false);
@@ -53,13 +53,6 @@ const ForgotPassword = () => {
 				<div className="col-md-6 offset-md-3">
 					<form onSubmit={handleSubmit}>
 						<FormInput
-							label="name"
-							type="text"
-							value={name}
-							placeholder="name"
-							handleChange={(e) => setName(e.target.value)}
-						/>
-						<FormInput
 							label="email"
 							type="email"
 							placeholder="email"
@@ -69,7 +62,7 @@ const ForgotPassword = () => {
 						<FormInput
 							label="password"
 							type="password"
-							placeholder="password"
+							placeholder="enter new password"
 							value={password}
 							handleChange={(e) => setPassword(e.target.value)}
 						/>
@@ -81,7 +74,7 @@ const ForgotPassword = () => {
 							value={secret}
 							handleChange={(e) => setSecret(e.target.value)}
 						/>
-						<CustomButton disabled={!email || !password || !secret}>
+						<CustomButton disabled={!email || !password || !secret || loading}>
 							{loading ? <SyncOutlined spin className="py-1" /> : 'Submit'}
 						</CustomButton>
 					</form>
