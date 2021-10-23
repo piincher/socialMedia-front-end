@@ -25,14 +25,19 @@ const Login = () => {
 				email,
 				password
 			});
+
+			if (data.error) {
+				toast.error(data.error);
+				setLoading(false);
+			} else {
+				setState({
+					user: data.user,
+					token: data.token
+				});
+				window.localStorage.setItem('auth', JSON.stringify(data));
+				router.push('/');
+			}
 			//update context
-			setState({
-				user: data.user,
-				token: data.token
-			});
-			window.localStorage.setItem('auth', JSON.stringify(data));
-			router.push('/');
-			setLoading(false);
 		} catch (error) {
 			toast.error(error.response.data);
 			setLoading(false);
@@ -90,7 +95,7 @@ const Login = () => {
 						</Link>
 					</p>
 				</div>
-			</div>>
+			</div>
 		</div>
 	);
 };

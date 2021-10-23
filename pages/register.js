@@ -33,9 +33,14 @@ const Register = () => {
 				secret
 			});
 
-			setName(''), setEmail(''), setPassword(''), setSecret('');
-			setLoading(false);
-			setOk(data.ok);
+			if (data.error) {
+				toast.error(data.error);
+				setLoading(false);
+			} else {
+				setName(''), setEmail(''), setPassword(''), setSecret('');
+				setLoading(false);
+				setOk(data.ok);
+			}
 		} catch (error) {
 			toast.error(error.response.data);
 			setLoading(false);
@@ -82,7 +87,7 @@ const Register = () => {
 							value={secret}
 							handleChange={(e) => setSecret(e.target.value)}
 						/>
-						<CustomButton disabled={!name || !email || !password || !secret}>
+						<CustomButton disabled={!name || !email || !password || !secret | loading}>
 							{loading ? <SyncOutlined spin className="py-1" /> : 'Submit'}
 						</CustomButton>
 					</form>
