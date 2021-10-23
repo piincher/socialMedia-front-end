@@ -24,6 +24,7 @@ const ForgotPassword = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
+			// console.log(name, email, password, secret);
 			setLoading(true);
 			const { data } = await axios.post(`/forgot-password`, {
 				email,
@@ -31,12 +32,22 @@ const ForgotPassword = () => {
 				secret
 			});
 
-			// setName(''), setEmail(''), setPassword(''), setSecret('');
-			// setLoading(false);
-			// setOk(data.ok);
-			console.log('forgot data', data);
-		} catch (error) {
-			toast.error(error.response.data);
+			console.log('forgot password res => ', data);
+
+			if (data.error) {
+				toast.error(data.error);
+				setLoading(false);
+			}
+
+			if (data.success) {
+				setEmail('');
+				setPassword('');
+				setSecret('');
+				setOk(true);
+				setLoading(false);
+			}
+		} catch (err) {
+			console.log(err);
 			setLoading(false);
 		}
 	};
