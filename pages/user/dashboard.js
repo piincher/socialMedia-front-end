@@ -1,10 +1,12 @@
-import { useContext } from 'react';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
 import FormPostInput from '../../components/FormPostInput';
 import UserRoute from '../../components/Routes/UserRoute';
 import { UserContext } from '../../context';
 
 const Home = () => {
 	const [ state, setState ] = useContext(UserContext);
+
 	return (
 		<UserRoute>
 			<div className="container-fluid">
