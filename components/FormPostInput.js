@@ -1,10 +1,14 @@
+import { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 import { Avatar } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+
 import CustomButton from './CustomButton';
+import { UserContext } from '../context/index';
 
 const FormPostInput = () => {
+	const [ state, setState ] = useContext(UserContext);
 	const [ content, setContent ] = useState('');
 
 	const router = useRouter();
@@ -14,6 +18,12 @@ const FormPostInput = () => {
 		try {
 			const { data } = await axios.post('/create-post', { content });
 			console.log('data', data);
+			if (data.error) {
+				toast.error(data.error);
+			} else {
+				toast.success(' WOW!! Post created');
+				setContent('');
+			}
 		} catch (error) {
 			console.log('error', error);
 		}
@@ -31,7 +41,11 @@ const FormPostInput = () => {
 				</form>
 			</div>
 			<div className="card-footer">
-				<CustomButton className="btn btn-primary btn-sm mt-1" onClick={postSubmit}>
+				<CustomButton
+					className="btn btn-primary btn-sm mt-1"
+					onClick={postSubmit}
+					disabled={content.length === 0}
+				>
 					Post
 				</CustomButton>
 			</div>
