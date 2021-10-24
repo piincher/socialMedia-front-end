@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { CameraOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
@@ -32,6 +33,19 @@ const FormPostInput = () => {
 			console.log('error', error);
 		}
 	};
+
+	const handleImage = async (e) => {
+		const file = e.target.files[0];
+		let formData = new FormData();
+		formData.append('image', file);
+		console.log([ ...formData ]);
+
+		try {
+			const { data } = await axios.post('/image-upload', { formData });
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<div className="card">
 			<div className="card-body pb-1">
@@ -55,8 +69,9 @@ const FormPostInput = () => {
 					Post
 				</CustomButton>
 				<label>
-					hi
-					<FormInput accept="images/*" type="file" hidden label="hello" />
+					{' '}
+					<CameraOutlined className="mt-3" />
+					<FormInput accept="images/*" type="file" hidden handleChange={handleImage} />
 				</label>
 			</div>
 		</div>
