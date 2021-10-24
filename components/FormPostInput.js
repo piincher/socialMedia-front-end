@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { CameraOutlined } from '@ant-design/icons';
+import { CameraOutlined, LoadingOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
 import { toast } from 'react-toastify';
@@ -15,19 +15,22 @@ const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const FormPostInput = () => {
 	const [ state, setState ] = useContext(UserContext);
 	const [ content, setContent ] = useState('');
+	const [ image, setImage ] = useState({});
+	const [ uploading, setUploading ] = useState(false);
 
 	const router = useRouter();
 
 	const postSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const { data } = await axios.post('/create-post', { content });
+			const { data } = await axios.post('/create-post', { content, image });
 			console.log('data', data);
 			if (data.error) {
 				toast.error(data.error);
 			} else {
 				toast.success(' WOW!! Post created');
 				setContent('');
+				setImage({});
 			}
 		} catch (error) {
 			console.log('error', error);
@@ -38,12 +41,15 @@ const FormPostInput = () => {
 		const file = e.target.files[0];
 		let formData = new FormData();
 		formData.append('image', file);
-		console.log([ ...formData ]);
-
+		setUploading(true);
 		try {
-			const { data } = await axios.post('/image-upload', { formData });
+			const { data } = await axios.post('/image-upload', formData);
+			//console.log('upload image', data);
+			setImage({ url: data.url, public_id: data.public_id });
+			setUploading(false);
 		} catch (error) {
 			console.log(error);
+			setUploading(false);
 		}
 	};
 	return (
@@ -69,8 +75,13 @@ const FormPostInput = () => {
 					Post
 				</CustomButton>
 				<label>
-					{' '}
-					<CameraOutlined className="mt-3" />
+					{image && image.url ? (
+						<Avatar size={30} src={image.url} className="mt-1" />
+					) : uploading ? (
+						<LoadingOutlined />
+					) : (
+						<CameraOutlined className="mt-3" />
+					)}
 					<FormInput accept="images/*" type="file" hidden handleChange={handleImage} />
 				</label>
 			</div>
