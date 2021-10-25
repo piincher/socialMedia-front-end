@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CameraOutlined, LoadingOutlined } from '@ant-design/icons';
 import dynamic from 'next/dynamic';
 import 'react-quill/dist/quill.snow.css';
@@ -17,9 +17,20 @@ const FormPostInput = () => {
 	const [ content, setContent ] = useState('');
 	const [ image, setImage ] = useState({});
 	const [ uploading, setUploading ] = useState(false);
+	const [ posts, setPosts ] = useState([]);
 
 	const router = useRouter();
 
+	useEffect(
+		() => {
+			if (state && state.token) fetchUserPosts();
+		},
+		[ state && state.token ]
+	);
+	const fetchUserPosts = async () => {
+		const { data } = await axios.get('/user-posts');
+		setPosts(data);
+	};
 	const postSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -84,6 +95,8 @@ const FormPostInput = () => {
 					)}
 					<FormInput accept="images/*" type="file" hidden handleChange={handleImage} />
 				</label>
+
+				<pre>{JSON.stringify(posts, null, 4)}</pre>
 			</div>
 		</div>
 	);
