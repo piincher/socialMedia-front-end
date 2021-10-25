@@ -16,7 +16,17 @@ const Post = ({ post }) => {
 			</div>
 			<div className="card-body">{renderHTML(post.content)}</div>
 			<div className="card-footer">
-				<img src={post.image && post.image.url} alt={post.postedBy.name} />
+				{post.image && (
+					<div
+						style={{
+							backgroundImage: 'url(' + post.image.url + ')',
+							backgroundRepeat: 'no-repeat',
+							backgroundPosition: 'center center',
+							backgroundSize: 'cover',
+							height: '300px'
+						}}
+					/>
+				)}
 				<div>like comlike /unment</div>
 			</div>
 		</React.Fragment>
