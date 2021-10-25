@@ -2,6 +2,7 @@ import React from 'react';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { Avatar } from 'antd';
+import { HeartOutlined, HeartFilled, CommentOutlined } from '@ant-design/icons';
 const Post = ({ post }) => {
 	return (
 		<React.Fragment>
@@ -10,7 +11,7 @@ const Post = ({ post }) => {
 				<span className="pt-2 ml-3" style={{ marginLeft: '1rem' }}>
 					{post.postedBy.name}
 				</span>
-				<span className="pt-2 mr-3" style={{ marginLeft: '1rem' }}>
+				<span className="pt-2 ml-3" style={{ marginLeft: '1rem' }}>
 					{moment(post.createdAt).fromNow()}
 				</span>
 			</div>
@@ -27,7 +28,14 @@ const Post = ({ post }) => {
 						}}
 					/>
 				)}
-				<div>like comlike /unment</div>
+				<div className="d-flex pt-2">
+					<HeartOutlined className="text-danger pt-2 h5" />
+					<div className="pt-2 pl-3" style={{ marginRight: '2rem' }}>
+						like
+					</div>
+					<CommentOutlined className="text-danger pt-2 h5 pl-5" />
+					<div className="pt-2 pl-3"> 2 comments</div>
+				</div>
 			</div>
 		</React.Fragment>
 	);
