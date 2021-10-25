@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useContext, useState } from 'react';
 import FormPostInput from '../../components/FormPostInput';
+import PostList from '../../components/PostList';
 import UserRoute from '../../components/Routes/UserRoute';
 import { UserContext } from '../../context';
 
@@ -18,6 +19,7 @@ const Home = () => {
 				<div className="row py-3">
 					<div className="col-md-8">
 						<FormPostInput />
+						<PostList />
 					</div>
 					<div className="col-md-4">sidebar</div>
 				</div>

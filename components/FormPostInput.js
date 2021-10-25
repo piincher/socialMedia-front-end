@@ -8,29 +8,16 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 
 import CustomButton from './CustomButton';
-import { UserContext } from '../context/index';
 import FormInput from './FormInput';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 const FormPostInput = () => {
-	const [ state, setState ] = useContext(UserContext);
 	const [ content, setContent ] = useState('');
 	const [ image, setImage ] = useState({});
 	const [ uploading, setUploading ] = useState(false);
-	const [ posts, setPosts ] = useState([]);
 
 	const router = useRouter();
 
-	useEffect(
-		() => {
-			if (state && state.token) fetchUserPosts();
-		},
-		[ state && state.token ]
-	);
-	const fetchUserPosts = async () => {
-		const { data } = await axios.get('/user-posts');
-		setPosts(data);
-	};
 	const postSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -95,8 +82,6 @@ const FormPostInput = () => {
 					)}
 					<FormInput accept="images/*" type="file" hidden handleChange={handleImage} />
 				</label>
-
-				<pre>{JSON.stringify(posts, null, 4)}</pre>
 			</div>
 		</div>
 	);
