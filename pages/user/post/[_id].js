@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import UserRoute from '../../../components/Routes/UserRoute';
 import UploadForm from '../../../components/UploadForm';
 import FormPostInput from '../../../components/FormPostInput';
-import CustomButton from '../../../components/CustomButton';
+import UpdatePost from '../../../components/UpdatePost';
 
 const EditPost = () => {
 	const [ post, setPost ] = useState({});
@@ -44,9 +44,8 @@ const EditPost = () => {
 					<div className="col-md-8">
 						<FormPostInput content={content} setContent={setContent} />
 						<UploadForm image={image} />
-						<CustomButton onClick={postSubmit}>submit</CustomButton>
+						<UpdatePost content={content} _id={_id} image={image} />
 					</div>
-					<div className="col-md-4">sidebar</div>
 				</div>
 			</div>
 		</UserRoute>
