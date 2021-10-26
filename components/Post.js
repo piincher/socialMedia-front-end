@@ -3,10 +3,11 @@ import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { Avatar } from 'antd';
 import { HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-
+import { useRouter } from 'next/router';
 import { UserContext } from '../context/index';
 const Post = ({ post }) => {
 	const [ state, setState ] = useContext(UserContext);
+	const router = useRouter();
 	return (
 		<React.Fragment>
 			<div className="card-header">
@@ -43,7 +44,10 @@ const Post = ({ post }) => {
 					state.user &&
 					state.user._id === post.postedBy._id && (
 						<React.Fragment>
-							<EditOutlined className="text-danger pt-2 h5 px-2 mx-auto" />
+							<EditOutlined
+								className="text-danger pt-2 h5 px-2 mx-auto"
+								onClick={() => router.push(`/user/post/${post._id}`)}
+							/>
 							<DeleteOutlined className="text-danger pt-2 h5 px-2" />
 						</React.Fragment>
 					)}
