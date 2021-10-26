@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { Avatar } from 'antd';
-import { HeartOutlined, HeartFilled, CommentOutlined } from '@ant-design/icons';
+import { HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+
+import { UserContext } from '../context/index';
 const Post = ({ post }) => {
+	const [ state, setState ] = useContext(UserContext);
 	return (
 		<React.Fragment>
 			<div className="card-header">
@@ -35,6 +38,15 @@ const Post = ({ post }) => {
 					</div>
 					<CommentOutlined className="text-danger pt-2 h5 pl-5" />
 					<div className="pt-2 pl-3"> 2 comments</div>
+
+					{state &&
+					state.user &&
+					state.user._id === post.postedBy._id && (
+						<React.Fragment>
+							<EditOutlined className="text-danger pt-2 h5 px-2 mx-auto" />
+							<DeleteOutlined className="text-danger pt-2 h5 px-2" />
+						</React.Fragment>
+					)}
 				</div>
 			</div>
 		</React.Fragment>
