@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { useRouter } from 'next/router';
 import CustomButton from './CustomButton';
 
 const UpdatePost = ({ content, image, _id }) => {
+	const router = useRouter();
 	const postSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -12,7 +13,7 @@ const UpdatePost = ({ content, image, _id }) => {
 			if (data.error) {
 				toast.error(data.error);
 			} else {
-				toast.success(' WOW!! Post created');
+				toast.success(' WOW!! Post update');
 				router.push('/user/dashboard');
 			}
 		} catch (error) {

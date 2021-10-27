@@ -43,7 +43,7 @@ const EditPost = () => {
 				<div className="row py-3">
 					<div className="col-md-8">
 						<FormPostInput content={content} setContent={setContent} />
-						<UploadForm image={image} />
+						<UploadForm image={image} setImage={setImage} />
 						<UpdatePost content={content} _id={_id} image={image} />
 					</div>
 				</div>
