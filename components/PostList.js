@@ -22,7 +22,7 @@ const PostList = () => {
 			{posts &&
 				posts.map((post) => (
 					<div key={post._id} className="card mb-5">
-						<Post post={post} />
+						<Post post={post} fetchUserPosts={fetchUserPosts} />
 					</div>
 				))}
 		</React.Fragment>
