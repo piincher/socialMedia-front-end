@@ -3,7 +3,7 @@ import axios from 'axios';
 import renderHTML from 'react-render-html';
 import moment from 'moment';
 import { Avatar } from 'antd';
-import { HeartOutlined, HeartFilled, CommentOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { HeartOutlined, CommentOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { UserContext } from '../context/index';
 import { toast } from 'react-toastify';
