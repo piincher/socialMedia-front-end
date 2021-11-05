@@ -37,6 +37,13 @@ const Nav = () => {
 						</li>
 						<li>
 							<Fragment>
+								<Link href="/user/profile/update">
+									<a className="nav-link dropdown-item ">profile</a>
+								</Link>
+							</Fragment>
+						</li>
+						<li>
+							<Fragment>
 								<a className="nav-link dropdown-item " onClick={logOut}>
 									logout
 								</a>
