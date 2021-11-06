@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext ,useEffect} from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -24,24 +24,36 @@ const ProfileUpdate = () => {
 	const router = useRouter();
 
 	const [ state ] = useContext(UserContext);
+    useEffect(() => {
+        console.log("user => object",state)
+        setName(state.user.name)
+        setUsername(state.user.username)
+        setEmail(state.user.email)
+        setAbout(state.user.about)
+        setName(state.user.name)
+
+    },[state && state.user])
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
 			setLoading(true);
-			const { data } = await axios.post(`/register`, {
-				name,
+			const { data } = await axios.put(`/profile-update`, {
+				username,
+                about,
+                name,
 				email,
 				password,
 				secret
 			});
+			console.log("update",data)
 
 			if (data.error) {
 				toast.error(data.error);
 				setLoading(false);
 			} else {
-				setName(''), setEmail(''), setPassword(''), setSecret('');
+				setOk(true);
 				setLoading(false);
-				setOk(data.ok);
+				
 			}
 		} catch (error) {
 			toast.error(error.response.data);
@@ -86,6 +98,7 @@ const ProfileUpdate = () => {
 							type="email"
 							placeholder="email"
 							value={email}
+                            disabled={true}
 							handleChange={(e) => setEmail(e.target.value)}
 						/>
 						<FormInput
@@ -103,17 +116,15 @@ const ProfileUpdate = () => {
 							value={secret}
 							handleChange={(e) => setSecret(e.target.value)}
 						/>
-						<CustomButton disabled={!name || !email || !password || !secret | loading}>
+						<CustomButton disabled={!name || !email || loading}>
 							{loading ? <SyncOutlined spin className="py-1" /> : 'Submit'}
 						</CustomButton>
 					</form>
 				</div>
 			</div>
 			<CustomModal title="congratulation" visible={ok} onCancel={() => setOk(false)} footer={null}>
-				<p>you have successfull register</p>
-				<Link href="/login">
-					<a className="btn btn-primary btn-sm">Login</a>
-				</Link>
+				<p>you have successfull update</p>
+				
 			</CustomModal>
 		</div>
 	);
