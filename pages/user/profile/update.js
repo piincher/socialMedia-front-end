@@ -23,7 +23,7 @@ const ProfileUpdate = () => {
 	const [ loading, setLoading ] = useState(false);
 	const router = useRouter();
 
-	const [ state ] = useContext(UserContext);
+	const [ state,setState ] = useContext(UserContext);
     useEffect(() => {
         console.log("user => object",state)
         setName(state.user.name)
@@ -51,9 +51,16 @@ const ProfileUpdate = () => {
 				toast.error(data.error);
 				setLoading(false);
 			} else {
+				
+				// update local storage 
+				//update context
+				let auth = JSON.parse(localStorage.getItem("auth"))
+				auth.user = data
+				localStorage.setItem("auth",JSON.stringify(auth))
+				setState({...state,data})
+
 				setOk(true);
 				setLoading(false);
-				
 			}
 		} catch (error) {
 			toast.error(error.response.data);
